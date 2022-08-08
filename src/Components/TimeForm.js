@@ -16,6 +16,17 @@ export default function TimeForm({selectedTime, setTime}) {
     setTime(date)
     console.log(date);
   }
+
+  function handleCurrentDate(date) {
+    const currDate = new Date();
+
+    if (date.getDay() === currDate.getDay()) {
+      return setHours(setMinutes(new Date(), 0), currDate.getHours());
+    }
+    else {
+      return setHours(setMinutes(date, 0), 9);
+    }
+  }
   
   return (
     <React.Fragment>
@@ -28,7 +39,7 @@ export default function TimeForm({selectedTime, setTime}) {
       selected={selectedTime}
       onChange={date => handleDateChange(date) }
       minDate={new Date()}
-      minTime={setHours(setMinutes(selectedTime, 0), 9)}
+      minTime={handleCurrentDate(selectedTime)}
       maxTime={setHours(setMinutes(selectedTime, 0), 17)}
       maxDate={new Date(result)}
       showTimeSelect />

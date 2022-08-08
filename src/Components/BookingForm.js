@@ -17,7 +17,7 @@ import Review from './Review';
 import ContactDetails from './ContactDetails';
 import { LinearProgress } from '@mui/material';
 
-const steps = ['Vehicle Selection', 'Time', 'Contact', 'Review Booking'];
+const steps = ['Contact', 'Vehicle Selection', 'Time', 'Review Booking'];
 
 const theme = createTheme();
 
@@ -39,11 +39,11 @@ export default function Checkout() {
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <VehicleSelection selectedVehicle={selectedVehicle} setVehicle={setVehicle}/>;
-      case 1:
-        return <TimeForm selectedTime={selectedTime} setTime={setTime}/>;
-      case 2:
         return <ContactDetails selectedDetails={selectedDetails} setDetails={setDetails}/>;
+      case 1:
+        return <VehicleSelection selectedVehicle={selectedVehicle} setVehicle={setVehicle}/>;
+      case 2:
+        return <TimeForm selectedTime={selectedTime} setTime={setTime}/>;
       case 3:
         return <Review selectedVehicle={selectedVehicle} selectedTime={selectedTime}/>;
       default:
