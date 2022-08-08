@@ -15,13 +15,14 @@ import VehicleSelection from './VehicleSelection';
 import TimeForm from './TimeForm';
 import Review from './Review';
 import ContactDetails from './ContactDetails';
-import { Skeleton } from '@mui/material';
+import { LinearProgress } from '@mui/material';
 
 const steps = ['Vehicle Selection', 'Time', 'Contact', 'Review Booking'];
 
 const theme = createTheme();
 
 export default function Checkout() {
+  const [minimumTimeElapsed, setMinimumTimeElapsed] = React.useState(false);
 
   const [selectedVehicle, setVehicle] = React.useState('');
   const [selectedTime, setTime] = React.useState(new Date());
@@ -51,6 +52,10 @@ export default function Checkout() {
   }
 
   const handleNext = () => {
+    // Loading skeleton
+    if (activeStep === steps.length-1) {
+      setTimeout(setMinimumTimeElapsed, 5000, true)
+    }
     setActiveStep(activeStep + 1);
   };
 
@@ -90,6 +95,9 @@ export default function Checkout() {
           </Stepper>
           <React.Fragment>
             {activeStep === steps.length ? (
+             <React.Fragment>
+              { // Show the skeleton if the timeout has not finished
+              minimumTimeElapsed ? 
             <React.Fragment>
                 <Typography variant="h5" gutterBottom>
                   You're all set, {selectedDetails.firstName}!
@@ -97,8 +105,18 @@ export default function Checkout() {
                 <Typography variant="subtitle1">
                   Your test drive has been confirmed. You're up next to test drive the {selectedVehicle}, on {selectedTime.toDateString()} at {selectedTime.toLocaleString('en-US', { hour: '2-digit', hour12: true, minute: '2-digit' })}.
                   You will receive further instructions at {selectedDetails.email}.
+
+                  {console.log({
+                    selectedDetails,
+                    selectedTime,
+                    selectedVehicle
+                  })}
+
                 </Typography>
               </React.Fragment>
+: <LinearProgress />
+} 
+</React.Fragment>
                 ) : (
               <React.Fragment>
                 {getStepContent(activeStep)}
